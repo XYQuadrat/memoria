@@ -31,9 +31,6 @@ Place in `data/example.yaml`, where the `data` directory is a sibling of this RE
       answer_form: $1%
       answer_type: number
       answer_range: [0, 100]
-    - type: draw
-      prompt: Draw on the diagram
-      image: some_image.gif
     - type: speed
       prompt: A speed quiz is like multiple-choice, but starts a two second countdown once the first answer is submitted to each question.
       answers: [Option 1, Option 2, Option 3]

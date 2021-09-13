@@ -27,7 +27,7 @@ import yaml
 from pblive import data
 
 
-eventlet.monkey_patch()
+eventlet.monkey_patch(thread=False)
 
 app = flask.Flask(__name__)
 app.jinja_env.globals['data'] = data
@@ -40,7 +40,8 @@ tmp_socket.connect(('118.138.0.0', 0))  # Connecting to a UDP socket sends no pa
 data.server_ip = tmp_socket.getsockname()[0]
 tmp_socket.close()
 
-data.server_ip = os.environ['QUIZ_SERVER_URL']
+# data.server_ip = os.environ['QUIZ_SERVER_URL']
+data.server_ip = 'localhost:5000'
 
 # Load session data
 for f in os.listdir('data'):
@@ -55,33 +56,33 @@ def index():
     return flask.render_template('index.html')
 
 
-@app.route('/admin')
+@app.route('/admin/')
 def admin():
     return flask.render_template('admin.html')
 
 
-@app.route('/session/<session_name>')
+@app.route('/session/<session_name>/')
 def session(session_name):
     return flask.render_template('session.html', session=data.sessions[session_name])
 
 
-@app.route('/image/<location>')
+@app.route('/image/<location>/')
 def image(location):
     return flask.send_from_directory(os.path.join(os.getcwd(), 'data/img'), location)
 
 
-@app.route('/admin/session/<session_name>')
+@app.route('/admin/session/<session_name>/')
 def admin_session(session_name):
     return flask.render_template('admin_session.html', session=data.sessions[session_name])
 
 
-@app.route('/admin/session/<session_name>/full')
+@app.route('/admin/session/<session_name>/full/')
 def admin_session_full(session_name):
     return flask.render_template('admin_session_full.html', session=data.sessions[session_name],
                                  render_question_full=render_question_full)
 
 
-@app.route('/debug')
+@app.route('/debug/')
 def debug():
     assert not app.debug
 
@@ -229,12 +230,6 @@ def do_goto_question(_session, question_num):
 
     _session.question_num = question_num
 
-    # Do work for some questions
-    if isinstance(_session.questions[question_num], data.RandomQuestion):
-        _session.questions[question_num].answerer = random.choice(
-            [other_user for _, other_user in data.users.items() if other_user.session == _session and other_user.colour]
-        )
-
     # Relay change
     for _, other_user in data.iterate_users():
         if other_user.session == _session and other_user.colour:
@@ -252,30 +247,6 @@ def socket_goto_question(question_num):
     user = data.admins[flask.request.sid]
 
     do_goto_question(user.session, question_num)
-
-
-@socketio.on('pass_question')
-def socket_pass_question():
-    user = data.admins[flask.request.sid] if flask.request.sid in data.admins else data.users[flask.request.sid]
-
-    if isinstance(user.session.questions[user.session.question_num], data.RandomQuestion):
-        # Re-randomise answerer
-        user.session.questions[user.session.question_num].answerer = random.choice(
-            [other_user for _, other_user in data.users.items() if
-             other_user.session == user.session and other_user.colour])
-
-        # Relay change
-        for _, other_user in data.iterate_users():
-            if other_user.session == user.session and other_user.colour:
-                flask_socketio.emit('update',
-                                    render_question(other_user, other_user.session, other_user.session.question_num),
-                                    room=other_user.sid)
-                flask_socketio.emit('update_left', render_sidebar(other_user, user.session), room=other_user.sid)
-        for _, _admin in data.iterate_admins():
-            if _admin.session == user.session:
-                flask_socketio.emit('update', render_question_admin(_admin.session, _admin.session.question_num),
-                                    room=_admin.sid)
-                flask_socketio.emit('update_left', render_sidebar(_admin, user.session), room=_admin.sid)
 
 
 # Start server
