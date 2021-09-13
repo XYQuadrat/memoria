@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,25 @@
 {% extends 'semantic_base.html' %}
 
 {% block main %}
-	<h1 class="ui dividing header">Select a session to join</h1>
-	
-	<div class="ui vertical buttons">
-		{% for _, session in data.sessions.items() %}
-			<a class="ui button" href="{{ url_for('session', session_name=session.name) }}">{{ session.title }}</a>
-		{% endfor %}
+	<div id="session_main">
+		Loading, please wait.
 	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ url_for('static', filename='vendor/socket-io/socket.io.min.js') }}"></script>
+	<script>
+		var session_name = '{{ session.name }}';
+		var socket = io.connect('ws://' + document.domain + ':' + location.port);
+		socket.on('connect', function() {
+			socket.emit('join_admin', session_name);
+		});
+		
+		socket.on('update', function(data) {
+			$('#session_main').html(data);
+		});
+		socket.on('update_left', function(data) {
+			$('#memoriae-left').html(data);
+		});
+	</script>
 {% endblock %}

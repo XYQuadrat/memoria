@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<h1 class="ui dividing header">Pick a colour</h1>
+{% extends 'question.html' %}
 
-<div id="colour_picker_container">
-	<div style="line-height: 38px;">
-		{% for colour in session.colours %}
-			<button class="ui button" style="background-color: {{ colour[1] }}; width: 32px; height: 32px; padding: 0 0;" onclick="socket.emit('register', {{ colour[0] }}, '{{ colour[1] }}');">{{ colour[0] }}</button>
+{% block base %}
+	<div>
+		{% for answer in session.questions[question_num].answers %}
+			<button class="ui button{% if answer == user.answers[question_num] %} primary{% endif %}" onclick="socket.emit('answer', {{ question_num }}, '{{ answer }}');">{{ answer }}</button>
 		{% endfor %}
+		{% if data.responses_for_question(session, question_num) > 0 %}
+			<button class="ui negative basic button">Hurry!</button>
+		{% endif %}
 	</div>
-</div>
+{% endblock %}

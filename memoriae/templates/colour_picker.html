@@ -1,5 +1,5 @@
-/*
-    PBLive
+{#
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -14,22 +14,14 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+#}
 
-#pblive-container {
-	padding-top: 5em;
-	padding-bottom: 5em;
-}
-@media only screen and (max-width: 767px) {
-	#pblive-container {
-		padding-top: 1em;
-		padding-bottom: 1em;
-	}
-	#pblive-main {
-		padding-top: 3em;
-	}
-}
+<h1 class="ui dividing header">Pick a colour</h1>
 
-#qrcode img {
-	margin: 0 auto;
-}
+<div id="colour_picker_container">
+	<div style="line-height: 38px;">
+		{% for colour in session.colours %}
+			<button class="ui button" style="background-color: {{ colour[1] }}; width: 32px; height: 32px; padding: 0 0;" onclick="socket.emit('register', {{ colour[0] }}, '{{ colour[1] }}');">{{ colour[0] }}</button>
+		{% endfor %}
+	</div>
+</div>

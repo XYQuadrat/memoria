@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -30,14 +30,14 @@
 		var session_name = '{{ session.name }}';
 		var socket = io.connect('ws://' + document.domain + ':' + location.port);
 		socket.on('connect', function() {
-			socket.emit('join_admin', session_name);
+			socket.emit('join', session_name);
 		});
 		
 		socket.on('update', function(data) {
 			$('#session_main').html(data);
 		});
 		socket.on('update_left', function(data) {
-			$('#pblive-left').html(data);
+			$('#memoriae-left').html(data);
 		});
 	</script>
 {% endblock %}

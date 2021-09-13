@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends 'question_admin.html' %}
+{% extends 'question.html' %}
 
 {% block base %}
-	<h1 class="ui dividing header">Quiz review</h1>
+	<h1 class="ui dividing header">Quiz finished</h1>
 	
-	{# ui list gunks things up for some reason #}
 	<ol>
 		{% for question in session.questions %}
 			{% set speed_question_num = loop.index0 %}
@@ -30,21 +29,15 @@
 					{{ question.prompt }}
 					<ul>
 						{% for answer in question.answers %}
-							<li style="line-height: 32px;">
-								{{ answer }}:
-								{% for _, user in data.users.items() %}
-									{% if user.session == session and user.answers[speed_question_num] == answer %}
-										<button class="ui button" style="background-color: {{ user.colour[1] }}; width: 32px; height: 32px; padding: 0 0;">{{ user.colour[0] }}</button>
-									{% endif %}
-								{% endfor %}
-							</li>
+							{% if answer == user.answers[speed_question_num] %}
+								<li><b>{{ answer }}</b></li>
+							{% else %}
+								<li>{{ answer }}</li>
+							{% endif %}
 						{% endfor %}
 					</ul>
 				</li>
 			{% endif %}
 		{% endfor %}
 	</ol>
-{% endblock %}
-
-{% block footmatter %}
 {% endblock %}

@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends 'semantic_base.html' %}
+{% extends 'question_admin.html' %}
 
-{% block main %}
-	<div id="session_main">
-		<h1 class="ui dividing header">{{ session.title }}</h1>
-		{% for _ in session.questions %}
-			{% if loop.index0 > 0 %}
-				<div style="margin-bottom: 2em;">
-					{{ render_question_full(session, loop.index0)|safe }}
-				</div>
-			{% endif %}
-		{% endfor %}
-	</div>
-{% endblock %}
-
-{% block script %}
-	<script>
-		$('.message').removeClass('hidden');
-	</script>
-{% endblock %}
+{% block base %}
+	{% if session.questions[question_num].revealed %}
+		<ul class="ui list">
+			{% for answer, users in data.unique_answers_for_question(session, question_num).items() %}
+				<li style="line-height: 32px;">
+					{{ session.questions[question_num].answer_form.replace('$1', answer) }}:
+					{% for user in users %}
+						<button class="ui button" style="background-color: {{ user.colour[1] }}; width: 32px; height: 32px; padding: 0 0;">{{ user.colour[0] }}</button>
+					{% endfor %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock base %}

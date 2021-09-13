@@ -1,4 +1,4 @@
-#    PBLive
+#    memoriae
 #    Copyright © 2017  RunasSudo (Yingtong Li)
 #    Copyright © 2020  William Jackson
 #
@@ -24,7 +24,7 @@ import random
 import socket
 import yaml
 
-from pblive import data
+from memoriae import data
 
 
 eventlet.monkey_patch(thread=False)

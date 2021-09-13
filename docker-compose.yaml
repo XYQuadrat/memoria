@@ -1,7 +1,0 @@
-services:
-  pblive:
-    image: ghcr.io/williamjacksn/pblive
-    build: .
-    init: true
-    ports:
-      - 5000:5000

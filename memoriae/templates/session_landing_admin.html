@@ -1,5 +1,5 @@
 {#
-    PBLive
+    memoriae
     Copyright © 2017  RunasSudo (Yingtong Li)
 
     This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends 'question.html' %}
+{% extends 'question_admin.html' %}
 
 {% block base %}
 	<h1 class="ui dividing header">On your marks…</h1>
 	
-	<p>Waiting for the administrator to start the quiz…</p>
-{% endblock %}
+	<p style="text-align: center;">Open the following address in your browser, and choose <i>{{ session.title }}</i>:</p>
+	<p style="text-align: center; font-family: monospace; font-size: xx-large;">{{ data.server_ip }}</p>
+	<p style="text-align: center;">Or scan the following QR code:</p>
+	
+	<div id="qrcode" style="text-align: center; margin-bottom: 1em;"></div>
+	
+	<script src="{{ url_for('static', filename='vendor/qrcode-js/qrcode.min.js') }}"></script>
+	<script>
+		new QRCode(document.getElementById('qrcode'), 'http://{{ data.server_ip }}:5000/session/{{ session.name }}');
+	</script>
+{% endblock base %}
+
+{% block footmatter %}{% endblock %}
