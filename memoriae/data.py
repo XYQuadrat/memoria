@@ -25,9 +25,7 @@ admins = {}
 
 
 class Session:
-    def __init__(
-        self, name=None, title=None, questions=None, question_num=0
-    ):
+    def __init__(self, name=None, title=None, questions=None, question_num=0):
         if questions is None:
             questions = []
 

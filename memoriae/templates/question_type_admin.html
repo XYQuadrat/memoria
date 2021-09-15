@@ -7,7 +7,7 @@
 				<li style="line-height: 32px;">
 					{{ session.questions[question_num].answer_form.replace('$1', answer) }}:
 					{% for user in users %}
-						<button class="ui button" style="background-color: {{ user.colour[1] }}; width: 32px; height: 32px; padding: 0 0;">{{ user.colour[0] }}</button>
+						<button class="ui button" style="width: 32px; height: 32px; padding: 0;"></button>
 					{% endfor %}
 				</li>
 			{% endfor %}
