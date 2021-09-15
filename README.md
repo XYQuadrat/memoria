@@ -12,7 +12,7 @@ This repository was forked from https://github.com/williamjacksn/pblive
     export QUIZ_SERVER_URL="http://localhost:5000"
     python -m memoriae
 
-Navigate to http://1.2.3.4:5000/admin to begin.
+Navigate to http://localhost:5000/admin to begin.
 
 ## Example
 

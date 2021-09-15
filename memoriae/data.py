@@ -26,37 +26,14 @@ admins = {}
 
 class Session:
     def __init__(
-        self, name=None, title=None, questions=None, colours=None, question_num=0
+        self, name=None, title=None, questions=None, question_num=0
     ):
         if questions is None:
             questions = []
-        if colours is None:
-            colours = [
-                (1, "#f44336"),
-                (2, "#e91e63"),
-                (3, "#9c27b0"),
-                (4, "#673ab7"),
-                (5, "#3f51b5"),
-                (6, "#2196f3"),
-                (7, "#03a9f4"),
-                (8, "#00bcd4"),
-                (9, "#009688"),
-                (10, "#4caf50"),
-                (11, "#8bc34a"),
-                (12, "#cddc39"),
-                (13, "#ffeb3b"),
-                (14, "#ffc107"),
-                (15, "#ff9800"),
-                (16, "#ff5722"),
-                (17, "#795548"),
-                (18, "#9e9e9e"),
-                (19, "#607d8b"),
-            ]
 
         self.name = name
         self.title = title
         self.questions = questions
-        self.colours = colours
         self.question_num = question_num
 
     @classmethod
@@ -174,14 +151,13 @@ class SpeedReviewQuestion(Question):
 
 
 class User:
-    def __init__(self, sid=None, session=None, answers=None, colour=None):
+    def __init__(self, sid=None, session=None, answers=None):
         if answers is None:
             answers = {}
 
         self.sid = sid
         self.session = session
         self.answers = answers
-        self.colour = colour
 
 
 class Admin(User):

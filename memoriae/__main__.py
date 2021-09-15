@@ -95,9 +95,7 @@ def socket_join(session_name):
     user = data.User(sid=flask.request.sid, session=_session)
     data.users[flask.request.sid] = user
 
-    # Send initial colour picker
-    flask_socketio.emit('update', flask.render_template('colour_picker.html', session=_session), room=flask.request.sid)
-    flask_socketio.emit('update_left', render_sidebar(user, _session), room=flask.request.sid)
+    socket_register();
 
 
 def render_question(user, _session, question_num):
@@ -122,7 +120,6 @@ def render_sidebar(user, _session):
 def relay_color_change(_user, _data):
     for _, other_user in _data.iterate_users():
         if other_user != _user and other_user.session == _user.session:
-            flask_socketio.emit('update_left', render_sidebar(other_user, _user.session), room=other_user.sid)
             if not other_user.colour:
                 flask_socketio.emit('update', flask.render_template('colour_picker.html', session=_user.session),
                                     room=other_user.sid)
@@ -143,7 +140,6 @@ def socket_join(session_name):
 
     # Send initial screen
     flask_socketio.emit('update', render_question_admin(_session, _session.question_num), room=flask.request.sid)
-    flask_socketio.emit('update_left', render_sidebar(user, _session), room=flask.request.sid)
 
 
 @socketio.on('disconnect')
@@ -158,22 +154,16 @@ def socket_disconnect():
         data.users_lock.release()
 
         # Release the colour if it's being held
-        if user.colour:
-            user.session.colours.append(user.colour)
-            relay_color_change(user, data)
+        # if user.colour:
+        #     user.session.colours.append(user.colour)
+        #     relay_color_change(user, data)
 
 
 @socketio.on('register')
-def socket_register(colour_id, colour_name):
+def socket_register():
     user = data.users[flask.request.sid]
 
-    if not user.colour and (colour_id, colour_name) in user.session.colours:
-        user.colour = (colour_id, colour_name)
-        user.session.colours.remove(user.colour)
-        relay_color_change(user, data)
-
     flask_socketio.emit('update', render_question(user, user.session, user.session.question_num), room=user.sid)
-    flask_socketio.emit('update_left', render_sidebar(user, user.session), room=user.sid)
 
 
 @socketio.on('answer')
@@ -201,7 +191,6 @@ def socket_answer(question_num, answer):
         # Relay change
         for _, other_user in data.iterate_users():
             if other_user.session == user.session:
-                flask_socketio.emit('update_left', render_sidebar(other_user, user.session), room=other_user.sid)
                 if isinstance(user.session.questions[user.session.question_num], data.SpeedQuestion):
                     flask_socketio.emit('update', render_question(other_user, user.session, user.session.question_num),
                                         room=other_user.sid)
@@ -232,10 +221,9 @@ def do_goto_question(_session, question_num):
 
     # Relay change
     for _, other_user in data.iterate_users():
-        if other_user.session == _session and other_user.colour:
+        if other_user.session == _session:
             flask_socketio.emit('update', render_question(other_user, _session, _session.question_num),
                                 room=other_user.sid)
-            flask_socketio.emit('update_left', render_sidebar(other_user, _session), room=other_user.sid)
     for _, _admin in data.iterate_admins():
         if _admin.session == _session:
             flask_socketio.emit('update', render_question_admin(_session, _session.question_num), room=_admin.sid)
