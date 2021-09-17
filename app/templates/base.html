@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+		<title>memoriae</title>
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dist/css/main.css') }}">
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css" integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js" integrity="sha384-GxNFqL3r9uRJQhR+47eDxuPoNE7yLftQM8LcxzgS4HT73tp970WS/wV5p8UzCOmb" crossorigin="anonymous"></script>
+
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+			onload="renderMathInElement(document.body);"></script>
+	</head>
+	<body class="bg-gray-100 text-gray-800 text-base">
+		<div id="memoriae-container" class="mx-5 md:mx-10">
+			{% block main %}{% endblock main %}
+		</div>
+
+		<script src="{{ url_for('static', filename='dist/vendor/jquery/jquery-3.1.1.min.js') }}"></script>
+		{% block script %}{% endblock script %}
+	</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+	<div id="session_main" class="flex flex-col h-screen py-10">
+		Loading, please wait.
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ url_for('static', filename='dist/vendor/socket-io/socket.io.min.js') }}"></script>
+	<script>
+		var session_name = '{{ session.name }}';
+		var socket = io.connect('ws://' + document.domain + ':' + location.port);
+		socket.on('connect', function() {
+			socket.emit('join_admin', session_name);
+		});
+		
+		socket.on('update', function(data) {
+			$('#session_main').html(data);
+		});
+		socket.on('update_left', function(data) {
+			$('#memoriae-left').html(data);
+		});
+	</script>
+{% endblock %}

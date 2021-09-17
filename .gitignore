@@ -3,3 +3,5 @@ data
 venv
 __pycache__
 docker-compose.override.yaml
+
+node_modules

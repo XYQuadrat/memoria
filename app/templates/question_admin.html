@@ -1,0 +1,28 @@
+{% block prompt %}
+	{% if session.questions[question_num].prompt %}
+		<p class="font-bold text-4xl mb-5">{{ session.questions[question_num].prompt }}</p>
+	{% endif %}
+	
+	{% if session.questions[question_num].image %}
+		<p style="text-align: center;"><img src="{{ url_for('image', location=session.questions[question_num].image) }}" style="width: 100%; max-height: 100%;"></p>
+	{% endif %}
+{% endblock prompt %}
+
+{% block base %}
+{% endblock base %}
+
+<p>
+	{% block footmatter %}
+		Total responses: {{ data.responses_for_question(session, question_num) }}
+		{% if session.questions[question_num].revealed %}
+		{% else %}
+			<button class="primary button" onclick="socket.emit('reveal_answers', {{ question_num }});">Reveal responses</button>
+		{% endif %}
+	{% endblock %}
+	{% if question_num > 0 %}
+		<button class="btn btn-blue mr-2 mb-2 md:mr-5" onclick="socket.emit('goto_question', {{ question_num - 1 }});">Previous question</button>
+	{% endif %}
+	{% if question_num < session.questions|length - 1 %}
+		<button class="btn btn-blue" onclick="socket.emit('goto_question', {{ question_num + 1 }});">Next question</button>
+	{% endif %}
+</p>

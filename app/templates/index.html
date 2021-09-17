@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+	<h1 class="text-lg">Select a session to join</h1>
+	
+	{% for _, session in data.sessions.items() %}
+		<a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href="{{ url_for('session', session_name=session.name) }}">{{ session.title }}</a>
+	{% endfor %}
+{% endblock %}

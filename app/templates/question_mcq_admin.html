@@ -1,0 +1,24 @@
+{% extends 'question_admin.html' %}
+
+{% block base %}
+	{% if session.questions[question_num].revealed %}
+		<ul class="list-disc">
+			{% for answer in session.questions[question_num].answers %}
+				<li style="line-height: 32px;">
+					{{ answer }}:
+					{% for _, user in data.users.items() %}
+						{% if user.session == session and answer in user.answers[question_num] %}
+							<button class="button" style="width: 32px; height: 32px; padding: 0;"></button>
+						{% endif %}
+					{% endfor %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<ul class="list">
+			{% for answer in session.questions[question_num].answers %}
+				<li>{{ answer }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock base %}

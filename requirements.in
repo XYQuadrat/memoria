@@ -3,4 +3,5 @@
 eventlet
 flask
 flask-socketio
+flask-assets
 pyyaml

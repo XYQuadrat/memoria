@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+	<h1 class="text-lg mb-5">Select a session to administrate</h1>
+	
+	<div class="vertical buttons">
+		{% for _, session in data.sessions.items() %}	
+			<a class="btn btn-blue" href="{{ url_for('admin_session', session_name=session.name) }}">{{ session.title }}</a>
+		{% endfor %}
+	</div>
+{% endblock %}

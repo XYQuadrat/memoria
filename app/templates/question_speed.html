@@ -1,0 +1,12 @@
+{% extends 'question.html' %}
+
+{% block base %}
+	<div id="content" class="grid grid-flow-row auto-rows-max grid-cols-2 grid-rows-2 gap-5 flex-grow">
+		{% for answer in session.questions[question_num].answers %}
+			<button class="btn text-xl bg-gray-300{% if answer == user.answers[question_num] %} btn-blue{% endif %}" onclick="socket.emit('answer', {{ question_num }}, '{{ answer }}');">{{ answer }}</button>
+		{% endfor %}
+	</div>
+	<script>
+		renderMathInElement(document.getElementById('content'));
+	</script>
+{% endblock %}

@@ -1,9 +1,0 @@
-{% extends 'question.html' %}
-
-{% block base %}
-	<div>
-		{% for answer in session.questions[question_num].answers %}
-			<button class="ui button{% if answer == user.answers[question_num] %} primary{% endif %}" onclick="socket.emit('answer', {{ question_num }}, '{{ answer }}');">{{ answer }}</button>
-		{% endfor %}
-	</div>
-{% endblock %}

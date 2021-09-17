@@ -1,0 +1,15 @@
+{% extends 'question_admin.html' %}
+
+{% block base %}
+	<div id="content" class="grid grid-flow-row auto-rows-max grid-cols-2 grid-rows-2 gap-5 flex-grow mb-5">
+		{% for answer in session.questions[question_num].answers %}
+			<button class="btn bg-gray-300 text-xl">{{ answer }}</button>
+		{% endfor %}
+	</div>
+	<script>
+		renderMathInElement(document.getElementById('content'));
+	</script>
+{% endblock base %}
+
+{% block footmatter %}
+{% endblock %}
