@@ -1,4 +1,4 @@
-#    memoriae
+#    memoria
 #    Copyright © 2017  RunasSudo (Yingtong Li)
 #    Copyright © 2020  William Jackson
 #    Copyright © 2021  Julian Steinmann

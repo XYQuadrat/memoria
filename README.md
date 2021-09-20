@@ -1,6 +1,6 @@
-# memoriae
+# memoria
 
-memoriae is an open-source self-hosted live online quiz tool, similar to Kahoot.
+memoria is an open-source self-hosted live online quiz tool, similar to Kahoot.
 
 This repository was forked from https://github.com/williamjacksn/pblive
 
@@ -10,7 +10,7 @@ This repository was forked from https://github.com/williamjacksn/pblive
     . venv/bin/activate
     pip install -r requirements.txt
     export QUIZ_SERVER_URL="http://localhost:5000"
-    python -m memoriae
+    python -m memoria
 
 Navigate to http://localhost:5000/admin to begin.
 
@@ -50,7 +50,7 @@ Files like `some_image.gif` should be placed within the `img` subfolder of `data
 
 ```bash
 # build
-docker build -t memoriae .
+docker build -t memoria .
 
-docker run --rm -v `pwd`/example.yaml:/memoriae/data/example.yaml -e "QUIZ_SERVER_URL=http://localhost:5000"  -p 5000:5000 memoriae
+docker run --rm -v `pwd`/example.yaml:/memoria/data/example.yaml -e "QUIZ_SERVER_URL=http://localhost:5000"  -p 5000:5000 memoria
 ```
