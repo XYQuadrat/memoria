@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block main %}
-	<h1 class="text-lg mb-5">Select a session to administrate</h1>
+	<h1 class="text-lg my-5">Select a session to administrate</h1>
 	
-	<div class="vertical buttons">
-		{% for _, session in data.sessions.items() %}	
-			<a class="btn btn-blue" href="{{ url_for('admin_session', session_name=session.name) }}">{{ session.title }}</a>
+		{% for _, session in data.sessions.items() %}
+			<div class="rounded max-w-sm shadow p-4">
+				<p class="font-bold text-xl mb-2">{{ session.title }}</p>
+				<p class="mb-5">{{ session.questions | length }} questions</p>
+				<a class="btn btn-blue" href="{{ url_for('admin_session', session_name=session.name) }}">Start quiz</a>
+			</div>
 		{% endfor %}
-	</div>
 {% endblock %}

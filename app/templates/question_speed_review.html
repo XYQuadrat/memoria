@@ -3,7 +3,7 @@
 {% block base %}
 	<h1 class="dividing header">Quiz finished</h1>
 	
-	<ol>
+	<ol id="content">
 		{% for question in session.questions %}
 			{% set speed_question_num = loop.index0 %}
 			{% if question.type == 'speed' %}
@@ -22,4 +22,7 @@
 			{% endif %}
 		{% endfor %}
 	</ol>
+	<script>
+		renderMathInElement(document.getElementById('content'));
+	</script>
 {% endblock %}

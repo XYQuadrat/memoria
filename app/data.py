@@ -57,7 +57,6 @@ class Question:
         question_types = {
             "landing": LandingQuestion,
             "mcq": MCQQuestion,
-            "type": TypeQuestion,
             "speed": SpeedQuestion,
             "speed_review": SpeedReviewQuestion,
         }

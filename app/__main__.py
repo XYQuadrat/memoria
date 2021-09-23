@@ -52,7 +52,10 @@ for f in os.listdir("data"):
 
 @app.route("/")
 def index():
-    return flask.render_template("index.html")
+    if(len(data.sessions) > 1):
+        return flask.render_template("index.html")
+    else:
+        return session(list(data.sessions.values())[0].name)
 
 
 @app.route("/admin/")
@@ -187,14 +190,11 @@ def socket_answer(question_num, answer):
     if question_num == user.session.question_num:
         user.answers[question_num] = answer
 
-        if isinstance(
-            user.session.questions[user.session.question_num], data.MCQQuestion
-        ):
-            flask_socketio.emit(
-                "update",
-                render_question(user, user.session, user.session.question_num),
-                room=user.sid,
-            )
+        flask_socketio.emit(
+            "update",
+            render_question(user, user.session, user.session.question_num),
+            room=user.sid,
+        )
 
         # Hurry!
         if isinstance(
