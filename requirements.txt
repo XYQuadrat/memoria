@@ -6,19 +6,23 @@
 #
 --extra-index-url https://alpine-wheels.github.io/index
 
+bidict==0.21.3
+    # via python-socketio
 click==8.0.1
     # via flask
 dnspython==2.1.0
     # via eventlet
 eventlet==0.32.0
     # via -r requirements.in
-flask==2.0.1
+flask==2.0.2
     # via
     #   -r requirements.in
+    #   flask-assets
     #   flask-socketio
+flask-assets==2.0
+    # via -r requirements.in
 flask-socketio==5.1.1
     # via -r requirements.in
-flask-assets==2.0
 greenlet==1.1.1
     # via eventlet
 itsdangerous==2.0.1
@@ -34,8 +38,8 @@ python-socketio==5.4.0
 pyyaml==5.4.1
     # via -r requirements.in
 six==1.16.0
-    # via
-    #   eventlet
-    #   python-socketio
+    # via eventlet
+webassets==2.0
+    # via flask-assets
 werkzeug==2.0.1
     # via flask
