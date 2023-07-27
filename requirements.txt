@@ -23,7 +23,7 @@ flask==2.3.2
     #   flask-socketio
 flask-assets==2.0
     # via -r requirements.in
-flask-socketio==5.3.4
+flask-socketio==5.3.5
     # via -r requirements.in
 greenlet==1.1.1
     # via eventlet
