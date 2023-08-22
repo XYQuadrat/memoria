@@ -16,7 +16,7 @@ dnspython==2.1.0
     # via eventlet
 eventlet==0.33.3
     # via -r requirements.in
-flask==2.3.2
+flask==2.3.3
     # via
     #   -r requirements.in
     #   flask-assets
@@ -45,5 +45,5 @@ six==1.16.0
     # via eventlet
 webassets==2.0
     # via flask-assets
-werkzeug==2.3.3
+werkzeug==2.3.7
     # via flask
